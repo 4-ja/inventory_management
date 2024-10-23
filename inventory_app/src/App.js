@@ -1,15 +1,16 @@
-import React from 'react';
-import './App.css';
-import LoginForm from './components/LoginForm';
-import Dash from './components/Dash';
+import AppController from "./components/AppController";
+import React from 'react'
+import ExampleUser from "./components/ExampleDB/ExampleUser";
+import UsersExample from "./components/ExampleDB/UsersExample";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      {/* <LoginForm /> */}
-      <Dash></Dash>
+    <div classname="app">
+    <AppController/>
+    <UsersExample/>
     </div>
   );
 }
 
-export default App;
+export default App
