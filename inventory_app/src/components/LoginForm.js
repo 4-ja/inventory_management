@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './LoginForm.css';
 
 const LoginForm = () => {
+  const navigate = useNavigate(); 
+
+  const handleCreateAccountClick = () => {
+    navigate('/'); 
+  };
+
   return (
     <div className="login-page">
       <div className="left-section">
@@ -14,7 +21,7 @@ const LoginForm = () => {
             <div className="logo">
               <img src="path_to_logo" alt="Inventory Logo" />
             </div>
-            <h1>Welcome 👋</h1>
+            <h1>你好 👋</h1>
             <p>Please login here</p>
           </div>
           
@@ -35,7 +42,9 @@ const LoginForm = () => {
                 placeholder="Password"
                 required
               />
-              <span className="forgot-password">Forgot Password?</span>
+              <span className="forgot-password" onClick={handleCreateAccountClick}>
+                Create Account
+              </span>
             </div>
 
             <button type="submit" className="login-btn">
