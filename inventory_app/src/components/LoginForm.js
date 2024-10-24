@@ -1,12 +1,35 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
 const LoginForm = () => {
-  const navigate = useNavigate(); 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleCreateAccountClick = () => {
-    navigate('/'); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const loginData = { email, password };
+  
+    try {
+      const response = await fetch('http://localhost:8000/api/loginUser', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(loginData),
+      });
+  
+      if (response.ok) {
+        const data = await response.json(); 
+        console.log('Login successful:', data);
+        navigate('/dashboard'); 
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message);
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Failed to login.');
+    }
   };
 
   return (
@@ -25,12 +48,14 @@ const LoginForm = () => {
             <p>Please login here</p>
           </div>
           
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Email Address</label>
               <input
                 type="email"
-                placeholder="Enter an Email Address"
+                placeholder="Enter your Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -39,17 +64,20 @@ const LoginForm = () => {
               <label>Password</label>
               <input
                 type="password"
-                placeholder="Password"
+                placeholder="Enter your Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <span className="forgot-password" onClick={handleCreateAccountClick}>
-                Create Account
-              </span>
             </div>
 
             <button type="submit" className="login-btn">
               Login
             </button>
+
+            <span className="forgot-password" onClick={() => navigate('/')}>
+              Create Account
+            </span>
           </form>
         </div>
       </div>
