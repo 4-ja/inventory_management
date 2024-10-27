@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const express = require("express");
+const Item = require('./Inventory');
 
 const UserSchema = new mongoose.Schema({
     name: { type: String, required: true },

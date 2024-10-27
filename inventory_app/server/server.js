@@ -2,14 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
+const itemRoutes = require("./routes/itemRoutes");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 app.use('/api', userRoutes);
+app.use('/api/Inventory', itemRoutes);
 
-mongoose.connect('mongodb+srv://carlo:inventory1@cluster0.c5wue.mongodb.net/Inventory', { 
+mongoose.connect('mongodb+srv://kyle:inventory1@cluster0.c5wue.mongodb.net/Inventory', { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 })

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Dash.css';
+import { Link } from 'react-router-dom';
 
 const Dash = () => {
   return (
@@ -12,8 +13,16 @@ const Dash = () => {
             </div>
         </div>
         <ul class="nav-links">
-            <li><a href="#" class="active"><img class="icon" src='./dash_selected.svg'></img><span class="nav-text">Dashboard</span></a></li>
-            <li><a href="#"><img class="icon" src='./items_unsel.svg'></img><span class="nav-text">Items</span></a></li>
+        <li>
+              <Link to="/dashboard" class="active">
+                <img class="icon" src='./dash_selected.svg'></img><span class="nav-text">Dashboard</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/items" class = "icon">
+              <img class="icon" src='./items_unsel.svg'></img><span class="nav-text">Items</span>
+              </Link>
+            </li>
         </ul>
     </div>
 
