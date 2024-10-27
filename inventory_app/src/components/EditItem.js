@@ -1,10 +1,10 @@
-// AddItem.js
+// EditItem.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './AddItem.css';
+import './EditItem.css';
 
-const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdded passed as prop
+const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => {
   const [formData, setFormData] = useState({
     itemName: '',
     category: '',
@@ -14,7 +14,20 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdde
     serialNumber: '',
     supplier: ''
   });
-  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    if (itemToEdit) {
+      setFormData({
+        itemName: itemToEdit.itemName || '',
+        category: itemToEdit.category || '',
+        amountInStore: itemToEdit.amountInStore || '',
+        manufacturer: itemToEdit.manufacturer || '',
+        pricePHP: itemToEdit.pricePHP || '',
+        serialNumber: itemToEdit.serialNumber || '',
+        supplier: itemToEdit.supplier || ''
+      });
+    }
+  }, [itemToEdit]);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,39 +36,23 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdde
     });
   };
 
-  const handleAddItem = async (e) => {
+  const handleUpdateItem = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/Inventory', formData);
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 3000);
-      
-      // Clear the form fields
-      setFormData({
-        itemName: '',
-        category: '',
-        amountInStore: '',
-        manufacturer: '',
-        pricePHP: '',
-        serialNumber: '',
-        supplier: ''
-      });
-      
+      await axios.put(`http://localhost:8000/api/Inventory/${itemToEdit._id}`, formData);
       toggleDrawer();
-      onItemAdded(); // Notify parent to refresh items
+      onItemUpdated(); // Notify parent component to refresh items
     } catch (error) {
-      console.error("Error adding item", error);
+      console.error("Error updating item", error);
     }
   };
 
   return (
-    <div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
-      {showSuccess && (
-        <div className="success-message">Item added successfully!</div>
-      )}
-      <form onSubmit={handleAddItem}>
-        <h2>Add New Item</h2>
-        
+<div className={`drawer ${isDrawerOpen ? 'open' : ''}`}>
+
+      <form onSubmit={handleUpdateItem}>
+        <h2>Edit Item</h2>
+
         <label>Item Name</label>
         <input type="text" name="itemName" value={formData.itemName} onChange={handleChange} required />
 
@@ -77,11 +74,11 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdde
         <label>Supplier</label>
         <input type="text" name="supplier" value={formData.supplier} onChange={handleChange} required />
 
-        <button type="submit">Add</button>
+        <button type="submit">Update</button>
         <button type="button" onClick={toggleDrawer}>Cancel</button>
       </form>
     </div>
   );
 };
 
-export default AddItem;
+export default EditItem;

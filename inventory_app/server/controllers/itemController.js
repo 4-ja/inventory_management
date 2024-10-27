@@ -1,17 +1,15 @@
 const Item = require('../models/Inventory');
-const inventory = require('../models/Inventory');
 
-// Add a new item
 const addItem = async (req, res) => {
-    const { name, category, amount, manufacturer, pricephp, serialnumber, supplier } = req.body;
+    const { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
     try {
         const newItem = new Item({
-            name,
+            itemName,
             category,
-            amount,
+            amountInStore,
             manufacturer,
-            pricephp,
-            serialnumber,
+            pricePHP,
+            serialNumber,
             supplier
         });
         const savedItem = await newItem.save();
@@ -21,7 +19,6 @@ const addItem = async (req, res) => {
     }
 };
 
-// Get all items
 const getAllItem = async (req, res) => {
     try {
         const items = await Item.find(); 
@@ -31,7 +28,6 @@ const getAllItem = async (req, res) => {
     }
 };
 
-// Get a specific item by ID
 const getItem = async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
@@ -44,14 +40,13 @@ const getItem = async (req, res) => {
     }
 };
 
-// Update an item by ID
 const updateItem = async (req, res) => {
-    const { name, category, amount, manufacturer, pricephp, serialnumber, supplier } = req.body;
+    const { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
     try {
         const updatedItem = await Item.findByIdAndUpdate(
             req.params.id,
-            { name, category, amount, manufacturer, pricephp, serialnumber, supplier },
-            { new: true } // Return the updated document
+            { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier },
+            { new: true } 
         );
         if (!updatedItem) {
             return res.status(404).json({ error: "Item not found" });
@@ -62,7 +57,6 @@ const updateItem = async (req, res) => {
     }
 };
 
-// Delete an item by ID
 const deleteItem = async (req, res) => {
     try {
         const deletedItem = await Item.findByIdAndDelete(req.params.id);

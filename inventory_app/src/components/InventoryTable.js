@@ -3,11 +3,14 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import AddItem from './AddItem';
 import './Inventory.css';
+import EditItem from './EditItem';
 
 const InventoryTable = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false); 
+  const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false); 
+  const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
+  const [editItem, setEditItem] = useState(null);
 
   const fetchItems = async () => {
     try {
@@ -29,50 +32,43 @@ const InventoryTable = () => {
     }
   };
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
+  const toggleAddDrawer = () => {
+    setIsAddDrawerOpen(!isAddDrawerOpen);
   };
 
-  // Add item to inventory
-  const handleAddItem = async (itemData) => {
-    try {
-      const response = await axios.post('http://localhost:8000/api/Inventory', itemData);
-      setItems([...items, response.data]); // Append new item to the list
-    } catch (error) {
-      console.error("Error adding item", error);
-    }
+  const handleItemAdded = () => {
+    fetchItems(); // Refresh the item list after adding a new item
+    setIsAddDrawerOpen(false); // Close the add drawer
   };
 
-  // Update an existing item
-  const handleUpdateItem = async (updatedItem) => {
-    try {
-      const response = await axios.put(`http://localhost:8000/api/Inventory/${updatedItem._id}`, updatedItem);
-      setItems(items.map(item => item._id === updatedItem._id ? response.data : item));
-      setEditItem(null); // Reset edit item
-    } catch (error) {
-      console.error("Error updating item", error);
-    }
-  };
-
-  // Delete an item
-  const handleDeleteItem = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8000/api/Inventory/${id}`);
-      setItems(items.filter(item => item._id !== id)); // Remove deleted item from the list
-    } catch (error) {
-      console.error("Error deleting item", error);
-    }
-  };
-
-  // Open drawer with item data for editing
+  // Open edit drawer with item data for editing
   const handleEditClick = (item) => {
     setEditItem(item);
-    setIsDrawerOpen(true);
+    setIsEditDrawerOpen(true);
   };
 
-    useEffect(() => {
-      fetchItems();
-    }, []);
+  const handleItemUpdated = () => {
+    fetchItems(); // Refresh items after updating
+    setEditItem(null); // Clear edit item state
+    setIsEditDrawerOpen(false); // Close the edit drawer
+  };
+
+  // Delete an item with confirmation
+  const handleDeleteItem = async (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:8000/api/Inventory/${id}`);
+        setItems(items.filter(item => item._id !== id)); // Remove deleted item from the list
+      } catch (error) {
+        console.error("Error deleting item", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   return (
     <div className="inventory-container">
@@ -109,8 +105,23 @@ const InventoryTable = () => {
             onChange={handleSearch}
           />
         </div>
-        <button className="add-button" onClick={toggleDrawer}>Add Item</button>
+        <button className="add-button" onClick={toggleAddDrawer}>Add Item</button>
       </div>
+
+      {/* Edit Item Drawer */}
+      <EditItem
+        isDrawerOpen={isEditDrawerOpen}
+        toggleDrawer={() => setIsEditDrawerOpen(false)}
+        itemToEdit={editItem}
+        onItemUpdated={handleItemUpdated}
+      />
+      
+      {/* Add Item Drawer */}
+      <AddItem 
+        isDrawerOpen={isAddDrawerOpen} 
+        toggleDrawer={toggleAddDrawer} 
+        onItemAdded={handleItemAdded}
+      />
 
       <table className="inventory-table">
         <thead>
@@ -122,6 +133,7 @@ const InventoryTable = () => {
             <th>Price (PHP)</th>
             <th>Serial Number</th>
             <th>Supplier</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -142,8 +154,6 @@ const InventoryTable = () => {
           ))}
         </tbody>
       </table>
-
-      <AddItem isDrawerOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
     </div>
   );
 };
