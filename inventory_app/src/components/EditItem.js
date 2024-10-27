@@ -1,5 +1,3 @@
-// EditItem.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './EditItem.css';
@@ -41,7 +39,7 @@ const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => 
     try {
       await axios.put(`http://localhost:8000/api/Inventory/${itemToEdit._id}`, formData);
       toggleDrawer();
-      onItemUpdated(); // Notify parent component to refresh items
+      onItemUpdated(); 
     } catch (error) {
       console.error("Error updating item", error);
     }

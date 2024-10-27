@@ -37,29 +37,29 @@ const InventoryTable = () => {
   };
 
   const handleItemAdded = () => {
-    fetchItems(); // Refresh the item list after adding a new item
-    setIsAddDrawerOpen(false); // Close the add drawer
+    fetchItems(); 
+    setIsAddDrawerOpen(false); 
   };
 
-  // Open edit drawer with item data for editing
+
   const handleEditClick = (item) => {
     setEditItem(item);
     setIsEditDrawerOpen(true);
   };
 
   const handleItemUpdated = () => {
-    fetchItems(); // Refresh items after updating
-    setEditItem(null); // Clear edit item state
-    setIsEditDrawerOpen(false); // Close the edit drawer
+    fetchItems(); 
+    setEditItem(null); 
+    setIsEditDrawerOpen(false); 
   };
 
-  // Delete an item with confirmation
+
   const handleDeleteItem = async (id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this item?");
     if (isConfirmed) {
       try {
         await axios.delete(`http://localhost:8000/api/Inventory/${id}`);
-        setItems(items.filter(item => item._id !== id)); // Remove deleted item from the list
+        setItems(items.filter(item => item._id !== id));
       } catch (error) {
         console.error("Error deleting item", error);
       }
@@ -108,7 +108,7 @@ const InventoryTable = () => {
         <button className="add-button" onClick={toggleAddDrawer}>Add Item</button>
       </div>
 
-      {/* Edit Item Drawer */}
+    
       <EditItem
         isDrawerOpen={isEditDrawerOpen}
         toggleDrawer={() => setIsEditDrawerOpen(false)}
@@ -116,7 +116,7 @@ const InventoryTable = () => {
         onItemUpdated={handleItemUpdated}
       />
       
-      {/* Add Item Drawer */}
+
       <AddItem 
         isDrawerOpen={isAddDrawerOpen} 
         toggleDrawer={toggleAddDrawer} 

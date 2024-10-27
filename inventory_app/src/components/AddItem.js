@@ -1,10 +1,8 @@
-// AddItem.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AddItem.css';
 
-const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdded passed as prop
+const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { 
   const [formData, setFormData] = useState({
     itemName: '',
     category: '',
@@ -30,7 +28,7 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdde
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
       
-      // Clear the form fields
+   
       setFormData({
         itemName: '',
         category: '',
@@ -42,7 +40,7 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => { // onItemAdde
       });
       
       toggleDrawer();
-      onItemAdded(); // Notify parent to refresh items
+      onItemAdded(); 
     } catch (error) {
       console.error("Error adding item", error);
     }
