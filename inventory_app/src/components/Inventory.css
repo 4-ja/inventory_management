@@ -55,6 +55,7 @@
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  margin-left: -300px;
 }
 
 .add-button {

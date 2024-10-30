@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import AddItem from './AddItem';
 import './Inventory.css';
 import EditItem from './EditItem';
+import Search from './Search';
+import './Search.css';
+
 
 const InventoryTable = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false); 
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
@@ -22,13 +26,18 @@ const InventoryTable = () => {
     }
   };
 
-  const handleSearch = async (event) => {
-    setSearchQuery(event.target.value);
-    try {
-      const response = await axios.get(`http://localhost:8000/api/Inventory?search=${event.target.value}`);
-      setItems(response.data);
-    } catch (error) {
-      console.error("Error searching items", error);
+  const handleSearch = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    if (query) {
+      const filtered = items.filter(item => 
+        item.itemName.toLowerCase().includes(query.toLowerCase()) ||
+        item._id.includes(query)
+      );
+      setFilteredItems(filtered);
+    } else {
+      setFilteredItems([]);
     }
   };
 
@@ -104,6 +113,7 @@ const InventoryTable = () => {
             value={searchQuery}
             onChange={handleSearch}
           />
+           {filteredItems.length > 0 && <Search results={filteredItems} />}
         </div>
         <button className="add-button" onClick={toggleAddDrawer}>Add Item</button>
       </div>
