@@ -10,7 +10,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api/Inventory', itemRoutes);
 
-mongoose.connect('mongodb+srv://carlo:inventory1@cluster0.c5wue.mongodb.net/Inventory', { 
+mongoose.connect('mongodb+srv://lai:inventory1@cluster0.c5wue.mongodb.net/Inventory', { 
     useNewUrlParser: true, 
     useUnifiedTopology: true 
 })

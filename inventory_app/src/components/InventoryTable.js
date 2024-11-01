@@ -42,9 +42,11 @@ const InventoryTable = () => {
   };
 
   const toggleAddDrawer = () => {
-    setIsAddDrawerOpen(!isAddDrawerOpen);
+    if (isEditDrawerOpen) {
+      setIsEditDrawerOpen(false); // Close the edit drawer if it's open
+    }
+    setIsAddDrawerOpen(!isAddDrawerOpen); // Toggle the add drawer
   };
-
   const handleItemAdded = () => {
     fetchItems(); 
     setIsAddDrawerOpen(false); 
@@ -52,8 +54,11 @@ const InventoryTable = () => {
 
 
   const handleEditClick = (item) => {
+    if (isAddDrawerOpen) {
+      setIsAddDrawerOpen(false); // Close the add drawer if it's open
+    }
     setEditItem(item);
-    setIsEditDrawerOpen(true);
+    setIsEditDrawerOpen(true); // Open the edit drawer
   };
 
   const handleItemUpdated = () => {
@@ -143,26 +148,26 @@ const InventoryTable = () => {
             <th>Price (PHP)</th>
             <th>Serial Number</th>
             <th>Supplier</th>
-            <th>Actions</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
-            <tr key={index}>
-              <td>{item.itemName || "N/A"}</td>
-              <td>{item.category || "N/A"}</td>
-              <td>{item.amountInStore || "N/A"}</td>
-              <td>{item.manufacturer || "N/A"}</td>
-              <td>{item.pricePHP || "N/A"}</td>
-              <td>{item.serialNumber || "N/A"}</td>
-              <td>{item.supplier || "N/A"}</td>
-              <td>
-                <button onClick={() => handleEditClick(item)}>Edit</button>
-                <button onClick={() => handleDeleteItem(item._id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+  {items.map((item, index) => (
+    <tr key={index} onClick={() => handleEditClick(item)} style={{ cursor: 'pointer' }}>
+      <td>{item.itemName || "N/A"}</td>
+      <td>{item.category || "N/A"}</td>
+      <td>{item.amountInStore || "N/A"}</td>
+      <td>{item.manufacturer || "N/A"}</td>
+      <td>{item.pricePHP || "N/A"}</td>
+      <td>{item.serialNumber || "N/A"}</td>
+      <td>{item.supplier || "N/A"}</td>
+      <td>
+        <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item._id); }}>Delete</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
       </table>
     </div>
   );
