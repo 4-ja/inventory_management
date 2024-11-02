@@ -1,12 +1,12 @@
 const Item = require('../models/Inventory');
 
 const addItem = async (req, res) => {
-    const { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
+    const { itemName, category, AmountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
     try {
         const newItem = new Item({
             itemName,
             category,
-            amountInStore,
+            AmountInStore,
             manufacturer,
             pricePHP,
             serialNumber,
