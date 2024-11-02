@@ -156,7 +156,7 @@ const InventoryTable = () => {
     <tr key={index} onClick={() => handleEditClick(item)} style={{ cursor: 'pointer' }}>
       <td>{item.itemName || "N/A"}</td>
       <td>{item.category || "N/A"}</td>
-      <td>{item.amountInStore || "N/A"}</td>
+      <td>{item.AmountInStore || "N/A"}</td>
       <td>{item.manufacturer || "N/A"}</td>
       <td>{item.pricePHP || "N/A"}</td>
       <td>{item.serialNumber || "N/A"}</td>
