@@ -41,11 +41,11 @@ const getItem = async (req, res) => {
 };
 
 const updateItem = async (req, res) => {
-    const { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
+    const { itemName, category, AmountInStore, manufacturer, pricePHP, serialNumber, supplier } = req.body;
     try {
         const updatedItem = await Item.findByIdAndUpdate(
             req.params.id,
-            { itemName, category, amountInStore, manufacturer, pricePHP, serialNumber, supplier },
+            { itemName, category, AmountInStore, manufacturer, pricePHP, serialNumber, supplier },
             { new: true } 
         );
         if (!updatedItem) {
