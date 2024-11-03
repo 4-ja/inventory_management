@@ -83,17 +83,22 @@ const Dash = () => {
           </div>
         </div>
         <ul className="nav-links">
-          <li>
-            <Link to="/dashboard" className="active">
-              <img className="icon" src='./dash_selected.svg' alt="Dashboard" /><span className="nav-text">Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/items" className="icon">
-              <img className="icon" src='./items_unsel.svg' alt="Items" /><span className="nav-text">Items</span>
-            </Link>
-          </li>
-        </ul>
+  <li>
+    <Link to="/dashboard" className="active">
+      <img className="icon" src='./dash_selected.svg' alt="Dashboard" />
+      <span className="nav-text">Dashboard</span>
+    </Link>
+  </li>
+  <li>
+    <Link to="/items" className="icon">
+      <img className="icon" src='./items_unsel.svg' alt="Items" />
+      <span className="nav-text">Items</span>
+    </Link>
+  </li>
+</ul>
+<button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       <div className="main-content">
@@ -105,7 +110,6 @@ const Dash = () => {
           <div className="search-bar">
             {/* <input type="text" placeholder="Search..." />
             <button>🔍</button> */}
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
           </div>
         </header>
 

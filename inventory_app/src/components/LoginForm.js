@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import './LoginForm.css';
 
@@ -7,6 +8,8 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,15 +68,22 @@ const LoginForm = () => {
             </div>
 
             <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                placeholder="Enter your Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+  <label>Password</label>
+  <div className="password-wrapper">
+    <input
+      type={showPassword ? 'text' : 'password'}
+      placeholder="Enter your Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+    <FontAwesomeIcon
+      icon={showPassword ? faEyeSlash : faEye}
+      className="toggle-password"
+      onClick={() => setShowPassword(!showPassword)}
+    />
+  </div>
+</div>
 
             <button type="submit" className="login-btn">
               Login

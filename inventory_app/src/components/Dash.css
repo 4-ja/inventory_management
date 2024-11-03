@@ -18,7 +18,10 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .sidebar-header {
     margin-left: 20px;
@@ -39,14 +42,15 @@ body {
 }
 
 .title {
-    font-weight:bold;
-    font-size: 24px; 
+    font-weight: bold;
+    font-size: 24px;
     color: #003c8f;
 }
 
 .nav-links {
     list-style-type: none;
     margin-left: 10px;
+    flex-grow: 1; /* Allow nav-links to take available space */
 }
 
 .nav-links li {
@@ -66,13 +70,13 @@ body {
 }
 
 .nav-links a.active {
-    background-color: #b0c4e6; 
+    background-color: #b0c4e6;
     color: #003c8f;
     font-weight: bold;
 }
 
 .nav-links a .icon {
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
 .main-content {
@@ -90,7 +94,6 @@ header {
 }
 
 .greeting h1 {
-
     font-size: 24px;
 }
 
@@ -103,7 +106,6 @@ header {
     margin-left: 300px;
     display: flex;
 }
-
 
 .search-bar input {
     padding: 10px;
@@ -170,16 +172,17 @@ section th, section td {
     font-size: 16px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    margin-left: 10px; /* Add spacing if needed */
-}
-
-.logout-btn:hover {
+    margin-left: 10px;
+  }
+  
+  .logout-btn:hover {
     background-color: #d32f2f; /* Darker red on hover */
-}
+  }
+  
 
 .recently-added {
     background-color: white;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     text-align: center;
     margin-top: 20px;
@@ -193,13 +196,16 @@ section th, section td {
     margin-left: 70px;
     margin-top: 20px;
 }
-/* .summary-cards {
+
+/* Commented-out styles for summary cards */
+/* 
+.summary-cards {
     display: flex;
     gap: 20px;
     margin-top: 20px;
-  }
-  
-  .card {
+}
+
+.card {
     flex: 1;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -210,16 +216,17 @@ section th, section td {
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-  
-  .card-header {
+}
+
+.card-header {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 10px;
     color: #003c8f;
-  }
-  
-  .card-body {
+}
+
+.card-body {
     font-size: 16px;
     color: #666;
-  } */
+}
+*/

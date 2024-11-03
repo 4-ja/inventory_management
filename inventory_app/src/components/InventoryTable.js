@@ -1,7 +1,7 @@
 // ...other imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AddItem from './AddItem';
 import './Inventory.css';
 import EditItem from './EditItem';
@@ -15,6 +15,14 @@ const InventoryTable = () => {
   const [isAddDrawerOpen, setIsAddDrawerOpen] = useState(false); 
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
+  const navigate = useNavigate();
+
+   // Function to handle logout
+   const handleLogout = () => {
+    // Add logout logic here, like clearing tokens
+    console.log("Logging out");
+    navigate('/login'); // Redirect to login page
+  };
 
   // Fetch items function
   const fetchItems = async () => {
@@ -115,6 +123,11 @@ const InventoryTable = () => {
             </Link>
           </li>
         </ul>
+
+        {/* Logout Button */}
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
       {/* Header */}
