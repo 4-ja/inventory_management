@@ -6,7 +6,7 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => {
   const [formData, setFormData] = useState({
     itemName: '',
     category: '',
-    amountInStore: '',
+    AmountInStore: '',
     manufacturer: '',
     pricePHP: '',
     serialNumber: '',
@@ -32,7 +32,7 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => {
       setFormData({
         itemName: '',
         category: '',
-        amountInStore: '',
+        AmountInStore: '',
         manufacturer: '',
         pricePHP: '',
         serialNumber: '',
@@ -61,7 +61,7 @@ const AddItem = ({ isDrawerOpen, toggleDrawer, onItemAdded }) => {
         <input type="text" name="category" value={formData.category} onChange={handleChange} required />
 
         <label>Amount in Store</label>
-        <input type="number" name="amountInStore" value={formData.amountInStore} onChange={handleChange} required />
+        <input type="number" name="AmountInStore" value={formData.AmountInStore} onChange={handleChange} required />
 
         <label>Manufacturer</label>
         <input type="text" name="manufacturer" value={formData.manufacturer} onChange={handleChange} required />

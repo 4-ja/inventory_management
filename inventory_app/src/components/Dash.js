@@ -79,7 +79,7 @@ const Dash = () => {
         <div className="sidebar-header">
           <div className="logo">
             <img src="./inv_logo.svg" alt="Logo" className="logo-img" />
-            <span className='title'>Inventory</span>
+            <span className='title'>DyogiQuest</span>
           </div>
         </div>
         <ul className="nav-links">
@@ -103,8 +103,8 @@ const Dash = () => {
             <p>Good Morning</p>
           </div>
           <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <button>🔍</button>
+            {/* <input type="text" placeholder="Search..." />
+            <button>🔍</button> */}
             <button onClick={handleLogout} className="logout-btn">Logout</button>
           </div>
         </header>

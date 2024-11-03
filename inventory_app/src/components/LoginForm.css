@@ -95,4 +95,19 @@
   .login-btn:hover {
     background-color: #0056b3;
   }
+  .password-wrapper {
+    position: relative;
+  }
   
+  .password-wrapper input {
+    padding-right: 2.5rem; /* Adjust space for the icon */
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 0.75rem; /* Adjust position of the icon */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+  }

@@ -20,12 +20,14 @@
 }
 
 .sidebar-header {
+  margin-left: 20px;
   display: flex;
   align-items: center;
   margin-bottom: 40px;
 }
 
 .nav-links li {
+  margin-left: 10px;
   /* You can add padding here if necessary */
 }
 

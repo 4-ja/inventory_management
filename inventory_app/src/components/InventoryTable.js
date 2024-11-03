@@ -1,3 +1,4 @@
+// ...other imports
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
@@ -7,7 +8,6 @@ import EditItem from './EditItem';
 import Search from './Search';
 import './Search.css';
 
-
 const InventoryTable = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +16,7 @@ const InventoryTable = () => {
   const [isEditDrawerOpen, setIsEditDrawerOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
 
+  // Fetch items function
   const fetchItems = async () => {
     try {
       const response = await axios.get('http://localhost:8000/api/Inventory');
@@ -26,6 +27,7 @@ const InventoryTable = () => {
     }
   };
 
+  // Handle search input
   const handleSearch = (event) => {
     const query = event.target.value;
     setSearchQuery(query);
@@ -41,18 +43,21 @@ const InventoryTable = () => {
     }
   };
 
+  // Toggle add item drawer
   const toggleAddDrawer = () => {
     if (isEditDrawerOpen) {
       setIsEditDrawerOpen(false); // Close the edit drawer if it's open
     }
     setIsAddDrawerOpen(!isAddDrawerOpen); // Toggle the add drawer
   };
+
+  // Handle item added
   const handleItemAdded = () => {
     fetchItems(); 
     setIsAddDrawerOpen(false); 
   };
 
-
+  // Handle edit click
   const handleEditClick = (item) => {
     if (isAddDrawerOpen) {
       setIsAddDrawerOpen(false); // Close the add drawer if it's open
@@ -61,13 +66,14 @@ const InventoryTable = () => {
     setIsEditDrawerOpen(true); // Open the edit drawer
   };
 
+  // Handle item updated
   const handleItemUpdated = () => {
     fetchItems(); 
     setEditItem(null); 
     setIsEditDrawerOpen(false); 
   };
 
-
+  // Handle delete item
   const handleDeleteItem = async (id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this item?");
     if (isConfirmed) {
@@ -80,23 +86,25 @@ const InventoryTable = () => {
     }
   };
 
+  // Effect to fetch items on component mount
   useEffect(() => {
     fetchItems();
   }, []);
 
   return (
     <div className="inventory-container">
+      {/* Sidebar */}
       <div className="sidebar">
         <div className="sidebar-header">
           <div className="logo">
             <img src="./inv_logo.svg" alt="Logo" className="logo-img" />
-            <span className='title'>Inventory</span>
+            <span className='title'>DyogiQuest</span>
           </div>
         </div>
         <ul className="nav-links">
           <li>
             <Link to="/dashboard" className="icon">
-              <img className="icon" src='./dash_selected.svg' alt="Dashboard" />
+              <img className="icon" src='./dash_unsel.svg' alt="Dashboard" />
               <span className="nav-text">Dashboard</span>
             </Link>
           </li>
@@ -109,6 +117,7 @@ const InventoryTable = () => {
         </ul>
       </div>
 
+      {/* Header */}
       <div className="header">
         <h2>All Items</h2>
         <div className="search-bar">
@@ -118,26 +127,27 @@ const InventoryTable = () => {
             value={searchQuery}
             onChange={handleSearch}
           />
-           {filteredItems.length > 0 && <Search results={filteredItems} />}
+          {filteredItems.length > 0 && (
+            <Search results={filteredItems} onItemSelect={handleEditClick} />
+          )}
         </div>
         <button className="add-button" onClick={toggleAddDrawer}>Add Item</button>
       </div>
 
-    
+      {/* Drawers for adding and editing items */}
       <EditItem
         isDrawerOpen={isEditDrawerOpen}
         toggleDrawer={() => setIsEditDrawerOpen(false)}
         itemToEdit={editItem}
         onItemUpdated={handleItemUpdated}
       />
-      
-
       <AddItem 
         isDrawerOpen={isAddDrawerOpen} 
         toggleDrawer={toggleAddDrawer} 
         onItemAdded={handleItemAdded}
       />
 
+      {/* Inventory Table */}
       <table className="inventory-table">
         <thead>
           <tr>
@@ -152,22 +162,21 @@ const InventoryTable = () => {
           </tr>
         </thead>
         <tbody>
-  {items.map((item, index) => (
-    <tr key={index} onClick={() => handleEditClick(item)} style={{ cursor: 'pointer' }}>
-      <td>{item.itemName || "N/A"}</td>
-      <td>{item.category || "N/A"}</td>
-      <td>{item.AmountInStore || "N/A"}</td>
-      <td>{item.manufacturer || "N/A"}</td>
-      <td>{item.pricePHP || "N/A"}</td>
-      <td>{item.serialNumber || "N/A"}</td>
-      <td>{item.supplier || "N/A"}</td>
-      <td>
-        <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item._id); }}>Delete</button>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+          {items.map((item, index) => (
+            <tr key={index} onClick={() => handleEditClick(item)} style={{ cursor: 'pointer' }}>
+              <td>{item.itemName || "N/A"}</td>
+              <td>{item.category || "N/A"}</td>
+              <td>{item.AmountInStore || "N/A"}</td>
+              <td>{item.manufacturer || "N/A"}</td>
+              <td>{item.pricePHP || "N/A"}</td>
+              <td>{item.serialNumber || "N/A"}</td>
+              <td>{item.supplier || "N/A"}</td>
+              <td>
+                <button onClick={(e) => { e.stopPropagation(); handleDeleteItem(item._id); }}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );

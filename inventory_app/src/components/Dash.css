@@ -21,6 +21,7 @@ body {
 }
 
 .sidebar-header {
+    margin-left: 20px;
     display: flex;
     align-items: center;
     margin-bottom: 40px;
@@ -45,6 +46,7 @@ body {
 
 .nav-links {
     list-style-type: none;
+    margin-left: 10px;
 }
 
 .nav-links li {
@@ -121,6 +123,7 @@ header {
 
 .sections {
     margin-top: 20px;
+    display: flex;
 }
 
 section {
@@ -128,17 +131,23 @@ section {
 }
 
 section table {
+    border: none;
+    text-align: center;
     width: 100%;
     border-collapse: collapse;
+    border-color: #ced2e2;
 }
 
 section th, section td {
+    border-color: #ced2e2;
+    text-align: center;
     padding: 10px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
 .summaries {
+    text-align: center;
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -167,3 +176,50 @@ section th, section td {
 .logout-btn:hover {
     background-color: #d32f2f; /* Darker red on hover */
 }
+
+.recently-added {
+    background-color: white;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.top-rated {
+    background-color: white;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 70px;
+    margin-top: 20px;
+}
+/* .summary-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    flex: 1;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .card-header {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #003c8f;
+  }
+  
+  .card-body {
+    font-size: 16px;
+    color: #666;
+  } */

@@ -58,7 +58,7 @@ const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => 
         <input type="text" name="category" value={formData.category} onChange={handleChange} required />
 
         <label>Amount in Store</label>
-        <input type="number" name="amountInStore" value={formData.AmountInStore} onChange={handleChange} required />
+        <input type="number" name="AmountInStore" value={formData.AmountInStore} onChange={handleChange} required />
 
         <label>Manufacturer</label>
         <input type="text" name="manufacturer" value={formData.manufacturer} onChange={handleChange} required />
