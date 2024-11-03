@@ -6,7 +6,7 @@ const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => 
   const [formData, setFormData] = useState({
     itemName: '',
     category: '',
-    amountInStore: '',
+    AmountInStore: '',
     manufacturer: '',
     pricePHP: '',
     serialNumber: '',
@@ -18,7 +18,7 @@ const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => 
       setFormData({
         itemName: itemToEdit.itemName || '',
         category: itemToEdit.category || '',
-        amountInStore: itemToEdit.amountInStore || '',
+        AmountInStore: itemToEdit.AmountInStore || '',
         manufacturer: itemToEdit.manufacturer || '',
         pricePHP: itemToEdit.pricePHP || '',
         serialNumber: itemToEdit.serialNumber || '',
@@ -58,7 +58,7 @@ const EditItem = ({ isDrawerOpen, toggleDrawer, itemToEdit, onItemUpdated }) => 
         <input type="text" name="category" value={formData.category} onChange={handleChange} required />
 
         <label>Amount in Store</label>
-        <input type="number" name="amountInStore" value={formData.amountInStore} onChange={handleChange} required />
+        <input type="number" name="amountInStore" value={formData.AmountInStore} onChange={handleChange} required />
 
         <label>Manufacturer</label>
         <input type="text" name="manufacturer" value={formData.manufacturer} onChange={handleChange} required />

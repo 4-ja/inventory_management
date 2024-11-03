@@ -19,9 +19,12 @@ const LoginForm = () => {
       });
   
       if (response.ok) {
-        const data = await response.json(); 
+        const data = await response.json();
         console.log('Login successful:', data);
-        navigate('/dashboard'); 
+    
+        localStorage.setItem('userName', data.user.name);
+    
+        navigate('/dashboard');
       } else {
         const errorData = await response.json();
         alert(errorData.message);

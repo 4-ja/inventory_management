@@ -151,3 +151,19 @@ section th, section td {
     padding: 15px;
     width: 48%;
 }
+
+.logout-btn {
+    background-color: #f44336; /* Red color for emphasis */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px; /* Add spacing if needed */
+}
+
+.logout-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}

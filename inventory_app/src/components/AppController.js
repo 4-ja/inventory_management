@@ -9,8 +9,8 @@ const AppController = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="/login" element={<LoginForm />} />
         <Route path="/" element={<SignupForm />} />
-        <Route path="/login" element={<LoginForm />} />
         <Route path="/dashboard" element={<Dash />} /> 
         <Route path="/items" element ={<InventoryTable />} /> 
       </Routes>

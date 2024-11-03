@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; 
+import axios from "axios";
 import './Dash.css';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 const Dash = () => {
   const [mostStockItem, setMostStockItem] = useState(null);
@@ -11,6 +11,8 @@ const Dash = () => {
   const [totalCategories, setTotalCategories] = useState(0);
   const [totalProductsQuantity, setTotalProductsQuantity] = useState(0); // New state variable
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,7 +61,17 @@ const Dash = () => {
     };
 
     fetchData();
+    const storedUserName = localStorage.getItem('userName');
+        if (storedUserName) {
+            setUserName(storedUserName);}
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('userName'); 
+    navigate('/login'); 
+};
+
+
 
   return (
     <div>
@@ -87,12 +99,13 @@ const Dash = () => {
       <div className="main-content">
         <header>
           <div className="greeting">
-            <h1>Hello /User/ 👋</h1>
+            <h1>Hello {userName} 👋</h1>
             <p>Good Morning</p>
           </div>
           <div className="search-bar">
             <input type="text" placeholder="Search..." />
             <button>🔍</button>
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
           </div>
         </header>
 
