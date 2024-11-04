@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import './Dash.css';
 
@@ -9,51 +9,39 @@ const Dash = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalSuppliers, setTotalSuppliers] = useState(0);
   const [totalCategories, setTotalCategories] = useState(0);
-  const [totalProductsQuantity, setTotalProductsQuantity] = useState(0); // New state variable
+  const [totalProductsQuantity, setTotalProductsQuantity] = useState(0);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState('');
+  const [slideIndex, setSlideIndex] = useState(0); // Carousel state
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/Inventory'); // Update with your actual API endpoint
-        const data = response.data; // Get the data directly
-
-        console.log('Fetched data:', data);
+        const response = await axios.get('http://localhost:8000/api/Inventory');
+        const data = response.data;
 
         if (data && data.length > 0) {
-          // Find the item with the most stock
           const maxStockItem = data.reduce((max, item) =>
             (item.AmountInStore > max.AmountInStore ? item : max), data[0]);
           setMostStockItem(maxStockItem);
-          console.log('Most stock item:', maxStockItem);
 
-          // Find the item with the least stock
           const minStockItem = data.reduce((min, item) =>
             (item.AmountInStore < min.AmountInStore ? item : min), data[0]);
           setLeastStockItem(minStockItem);
-          console.log('Least stock item:', minStockItem);
 
-          // Update total number of items
           setTotalItems(data.length);
-          console.log('Total items:', data.length);
-
-          // Calculate total quantity of products
           const totalQuantity = data.reduce((sum, item) => sum + item.AmountInStore, 0);
-          setTotalProductsQuantity(totalQuantity); // Set the total products quantity
+          setTotalProductsQuantity(totalQuantity);
 
-          // Calculate unique suppliers and categories
           const suppliersSet = new Set(data.map(item => item.supplier));
           const categoriesSet = new Set(data.map(item => item.category));
 
           setTotalSuppliers(suppliersSet.size);
           setTotalCategories(categoriesSet.size);
-        } else {
-          console.warn('No items found in the response.');
         }
 
-        setLoading(false); // End loading state
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
@@ -62,16 +50,41 @@ const Dash = () => {
 
     fetchData();
     const storedUserName = localStorage.getItem('userName');
-        if (storedUserName) {
-            setUserName(storedUserName);}
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem('userName');
+    navigate('/login');
+  };
+
+  useEffect(() => {
+    // Auto-update slide index every 1.5 seconds
+    const interval = setInterval(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
+    }, 2500);
+
+    return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('userName'); 
-    navigate('/login'); 
-};
-
-
+  const carouselItems = [
+    {
+      src: "./razer.webp",
+      alt: "Razer",
+      caption: "Razer"
+    },
+    {
+      src: "./ASUS.webp",
+      alt: "ASUS",
+      caption: "ASUS"
+    },
+    {
+      src: "./MSI.jpg",
+      alt: "MSI",
+      caption: "MSI"
+    }
+  ];
 
   return (
     <div>
@@ -83,20 +96,20 @@ const Dash = () => {
           </div>
         </div>
         <ul className="nav-links">
-  <li>
-    <Link to="/dashboard" className="active">
-      <img className="icon" src='./dash_selected.svg' alt="Dashboard" />
-      <span className="nav-text">Dashboard</span>
-    </Link>
-  </li>
-  <li>
-    <Link to="/items" className="icon">
-      <img className="icon" src='./items_unsel.svg' alt="Items" />
-      <span className="nav-text">Items</span>
-    </Link>
-  </li>
-</ul>
-<button className="logout-btn" onClick={handleLogout}>
+          <li>
+            <Link to="/dashboard" className="active">
+              <img className="icon" src='./dash_selected.svg' alt="Dashboard" />
+              <span className="nav-text">Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/items" className="icon">
+              <img className="icon" src='./items_unsel.svg' alt="Items" />
+              <span className="nav-text">Items</span>
+            </Link>
+          </li>
+        </ul>
+        <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
       </div>
@@ -106,10 +119,6 @@ const Dash = () => {
           <div className="greeting">
             <h1>Hello {userName} 👋</h1>
             <p>Good Morning</p>
-          </div>
-          <div className="search-bar">
-            {/* <input type="text" placeholder="Search..." />
-            <button>🔍</button> */}
           </div>
         </header>
 
@@ -171,12 +180,24 @@ const Dash = () => {
           <div className="item-summary">
             <h3>Items Summary</h3>
             <p>Total Unique Items: <strong>{totalItems}</strong></p>
-            <p>Total Products Quantity: <strong>{totalProductsQuantity}</strong> pcs</p> {/* Display total products quantity */}
+            <p>Total Products Quantity: <strong>{totalProductsQuantity}</strong> pcs</p>
           </div>
           <div className="product-summary">
             <h3>Product Summary</h3>
             <p>Number of Suppliers: <strong>{totalSuppliers}</strong></p>
             <p>Number of Categories: <strong>{totalCategories}</strong></p>
+          </div>
+        </div>
+
+        <div className="carousel-container">
+          <h2>Product Showcase</h2>
+          <div className="carousel-slide">
+            {carouselItems.map((item, index) => (
+              <div className={`carousel-item ${index === slideIndex ? "active" : "inactive"}`} key={index}>
+                <img src={item.src} alt={item.alt} />
+                <div className="carousel-caption">{item.caption}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -42,19 +42,19 @@ const LoginForm = () => {
   return (
     <div className="login-page">
       <div className="left-section">
-        <img src="path_to_your_image" alt="Inventory" />
+        <img className="logo" src="./inv_logo.svg" alt="Inventory" />
       </div>
 
       <div className="right-section">
         <div className="login-box">
           <div className="welcome-section">
-            <div className="logo">
-              <img src="path_to_logo" alt="Inventory Logo" />
-            </div>
-            <h1>你好 👋</h1>
-            <p>Please login here</p>
+            <h1 className='dyogi'>DyogiQuest</h1>
+            <hr></hr>
+            <br></br>
+            <h1 className='welcome'>Welcome!👋</h1>
+            <p className='welcome' >Please login here</p>
           </div>
-          
+
           <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Email Address</label>

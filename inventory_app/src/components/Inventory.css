@@ -22,11 +22,11 @@
 }
 
 .nav-links {
-  flex-grow: 1; /* Pushes the logout button down */
+  margin-bottom: auto; /* Pushes the links up */
 }
 
 .logout-btn {
-  background-color: #f44336; /* Red color for emphasis */
+  background-color: #f44336;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -34,7 +34,7 @@
   font-size: 16px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  margin-left: 10px;
+  margin-top: auto; /* Keeps the button at the bottom */
 }
 
 .logout-btn:hover {
@@ -50,13 +50,16 @@
   position: fixed;
   top: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures space between header, links, and logout */
 }
 
 .sidebar-header {
   margin-left: 20px;
   display: flex;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px; /* Reduces space below the logo */
 }
 
 .nav-links li {
@@ -117,5 +120,7 @@
   padding: 10px;
   border: 1px solid #ddd;
 }
-
+.logo{
+  margin-top: -55px;
+}
 

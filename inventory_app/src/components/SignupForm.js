@@ -42,7 +42,7 @@ const SignupForm = () => {
   return (
     <div className="signup-page">
       <div className="left-section">
-        <img src="path_to_image" alt="Inventory" />
+        <img className='logo' src="./inv_logo.svg" alt="Inventory" />
       </div>
       <div className="right-section">
         <div className="signup-box">
